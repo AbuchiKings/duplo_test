@@ -1,0 +1,32 @@
+{
+  "name": "duplo_store",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "abuchikings",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/helmet": "^11.1.1",
+    "@prisma/client": "^5.5.0",
+    "@types/redis": "^4.0.11",
+    "dotenv": "^16.3.1",
+    "envalid": "^8.0.0",
+    "fastify": "^4.24.3",
+    "fastify-jwt": "^4.2.0",
+    "fastify-zod": "^1.4.0",
+    "mongoose": "^7.6.3",
+    "prisma": "^5.5.0",
+    "redis": "^4.6.10",
+    "zod": "^3.22.4",
+    "zod-to-json-schema": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^20.8.8",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.2.2"
+  }
+}

@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Business {
+  id        String   @id @default(cuid())
+  name      String
+  address   String
+  users     User[]
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+}
+
+model User {
+  id         String   @id @default(cuid())
+  email      String   @unique
+  name       String
+  role       Role     @default(HEAD)
+  password   String
+  businessId String
+  department String?
+  updatedAt  DateTime @updatedAt @db.Timestamptz(3)
+  createdAt  DateTime @default(now()) @db.Timestamptz(3)
+  business   Business @relation(fields: [businessId], references: [id])
+}
+
+model Order {
+  id        String   @id @default(cuid())
+  amount    Decimal  @db.Decimal(14, 4)
+  quantity  Int
+  item      String
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+}
+
+enum Role {
+  HEAD
+  OWNER
+}

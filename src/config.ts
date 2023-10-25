@@ -7,7 +7,7 @@ const env = cleanEnv(process.env, {
   NODE_ENV: str({
     choices: ['development', 'staging', 'production', 'test']
   }),
-  PORT: port({ default: 8000 }),
+  PORT: port({ default: 5001 }),
 });
 
 export default env;

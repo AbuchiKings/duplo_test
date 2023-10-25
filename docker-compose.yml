@@ -1,0 +1,76 @@
+version: "3.8"
+services:
+  api:
+    build: .
+    volumes:
+      - ./:/home/node/app
+      - node_modules:/home/node/app/node_modules
+    env_file:
+      - ./.env
+    environment:
+      RUNTIME: DOCKER
+    container_name: store_api
+    restart: unless-stopped
+    depends_on:
+      database:
+        condition: service_started
+      mongo_database:
+        condition: service_started
+    networks:
+      - store
+
+  nginx:
+    image: nginx
+    networks:
+      - store
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_started
+
+  database:
+    image: postgres:13
+    container_name: postgres_database
+    volumes:
+      - store_postgres_db_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - 5432:5432
+    networks:
+      - store
+
+  mongo_database:
+    image: mongo:6.0.3
+    container_name: mongo_database
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_DB_ADMIN
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_DB_ADMIN_PWD
+      - MONGO_INITDB_DATABASE=$MONGO_DB_NAME
+    ports:
+      - 27017:27017
+    volumes:
+      - store_mongo_db_data:/data/db
+
+  redis:
+    image: redis
+    container_name: store_redis
+    volumes:
+      - store_redis_data:/data
+    restart: unless-stopped
+    networks:
+      - store
+
+networks:
+  store:
+volumes:
+  store_mongo_db_data:
+  node_modules:
+  store_postgres_db_data:
+  store_redis_data:

@@ -1,16 +1,17 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 
 import { ApiError, InternalError } from './ApiError';
-import { UnprocessibleEntityResponse } from './ApiResponse';
+import { ConflictMsgResponse, UnprocessibleEntityResponse } from './ApiResponse';
 
-const errorHandler = (err: Error, req: FastifyRequest, res: FastifyReply, ) => {
+const errorHandler = (err: any, req: FastifyRequest, res: FastifyReply,) => {
+    
     if (err instanceof ApiError) {
         ApiError.handle(err, res);
-
     } else {
-        // @ts-ignore
-        if (err.code === 'FST_ERR_VALIDATION' )  {
+        if (err.code === 'FST_ERR_VALIDATION') {
             return new UnprocessibleEntityResponse(err.message).send(res);
+        } else if (err.code === 'P2002') {
+            return new ConflictMsgResponse(`${err.meta?.target[0]} is already in use`)
         }
         if (process.env.NODE_ENV === 'development') {
             //console.log(err) // eslint-disable-line

@@ -3,10 +3,12 @@ import helmet from '@fastify/helmet'
 
 import env from './config'
 import errorHandler from "./utils/errorHandler";
-//import postRoutes from "./modules/post/post.routes";
+import businessRoutes from "./modules/business/business.routes";
+import userRoutes from "./modules/user/user.routes";
 
 import { NoEntryError } from "./utils/ApiError";
-//import { postSchema } from "./modules/post/post.schema";
+import { businessSchema } from "./modules/business/business.schema";
+import { userSchema } from "./modules/user/user.schema";
 import { SuccessMsgResponse } from "./utils/ApiResponse";
 
 const server = Fastify();
@@ -17,6 +19,7 @@ const server = Fastify();
         server.register(helmet);
         await server.register(import('@fastify/compress'));
         await server.ready();
+
         const ls = await server.listen({ port: env.PORT, host: '0.0.0.0' });
         console.log(`Server is listening on ${ls}`);
     } catch (error) {
@@ -27,9 +30,9 @@ const server = Fastify();
 
 server.setErrorHandler(errorHandler);
 
-// for (const schema of [...postSchema]) {
-//     server.addSchema(schema);
-// }
+for (let schema of [...businessSchema, ...userSchema]) {
+    server.addSchema(schema);
+}
 
 server.get('/', function (req, res) {
     return new SuccessMsgResponse('Server is up and running.').send(res)
@@ -38,4 +41,6 @@ server.get('/', function (req, res) {
 server.get('*', function (req, res) {
     throw new NoEntryError(`Cannot find ${req.originalUrl} on this server`);
 })
-//server.register(postRoutes, { prefix: '/api/v1/posts' });
+
+server.register(businessRoutes, { prefix: '/api/v1/business' });
+server.register(userRoutes, { prefix: '/api/v1/user' });

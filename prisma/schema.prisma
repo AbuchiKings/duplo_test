@@ -10,7 +10,6 @@ datasource db {
 model Business {
   id        String   @id @default(cuid())
   name      String
-  address   String
   users     User[]
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
   createdAt DateTime @default(now()) @db.Timestamptz(3)

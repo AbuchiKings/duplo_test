@@ -7,14 +7,19 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import * as User from './user.service'
 import { CreateUserType, LoginUserType } from "./user.schema";
 import { CreatedSuccessResponse, SuccessResponse } from "../../utils/ApiResponse";
-import { AuthFailureError } from "../../utils/ApiError";
+import { AuthFailureError, NotFoundError } from "../../utils/ApiError";
 import { createToken } from "../../middlewares/auth";
 import { setJson } from "../../cache/query";
 import { UserInterface } from "../../utils/interface";
+import { findBusiness } from "../business/business.service";
 
 class UserController {
     public static async createUser(req: FastifyRequest<{ Body: CreateUserType }>, res: FastifyReply) {
         const { role, email, password, name, businessId, department } = req.body;
+        let business = await findBusiness(businessId);
+        if (!business) {
+            throw new NotFoundError('Buiness not found.');
+        }
         const passwordHash = await bcrypt.hash(password, 12);
         const user = await User.createUser({ role, email, password: passwordHash, name, businessId, department });
         const data = getUserData(user);

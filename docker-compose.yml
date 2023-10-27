@@ -44,26 +44,12 @@ services:
     networks:
       - store
 
-  # mongo:
-  #   image: mongo
-  #   container_name: mongo_database
-  #   restart: unless-stopped
-  #   env_file: 
-  #     - ./.env
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: abuchikings
-  #     MONGO_INITDB_ROOT_PASSWORD: password
-  #   ports:
-  #     - 27017:27017
-  #   volumes:
-  #     - store_mongo_db_data:/data/db
-  #   networks:
-  #     - store
-
   mongo:
     image: mongo
     container_name: mongo_database
     restart: unless-stopped
+    ports:
+      - 27017:27017
     env_file: 
       - ./.env
     environment:

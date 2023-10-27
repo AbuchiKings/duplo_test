@@ -14,7 +14,6 @@ import { SuccessMsgResponse } from "./utils/ApiResponse";
 import { verifyToken } from "./middlewares/auth";
 import orderRoutes from "./modules/order/order.routes";
 import { orderSchema } from "./modules/order/order.schema";
-import { UserInterface } from '../../auth/src/interfaces/interfaces';
 
 const server = Fastify();
 

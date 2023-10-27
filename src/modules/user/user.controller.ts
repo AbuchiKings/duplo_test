@@ -10,7 +10,7 @@ import { CreatedSuccessResponse, SuccessResponse } from "../../utils/ApiResponse
 import { AuthFailureError } from "../../utils/ApiError";
 import { createToken } from "../../middlewares/auth";
 import { setJson } from "../../cache/query";
-import { UserInterface } from "utils/interface";
+import { UserInterface } from "../../utils/interface";
 
 class UserController {
     public static async createUser(req: FastifyRequest<{ Body: CreateUserType }>, res: FastifyReply) {

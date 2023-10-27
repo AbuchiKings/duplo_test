@@ -18,7 +18,6 @@ taskQueue.process('log_order', 10, async (job, done) => {
             count: 0
         }
         await taskQueue.add('log_tax', data, { removeOnComplete: true });
-        console.log(txn);
         console.log('*********************** Order logging Done *************************');
         done();
     } catch (error: any) {
@@ -33,7 +32,6 @@ taskQueue.process('log_tax', 10, async (job, done) => {
         console.log('*********************** Logging Tax*************************');
         delete job.data.count
         let res = await requestHandler({ verb: 'post', payload: job.data, url: env.TAX_URL, })
-        console.log(res.data);
         console.log('*********************** Tax logging Done *************************');
         done();
     } catch (error: any) {

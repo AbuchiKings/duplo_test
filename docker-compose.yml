@@ -14,7 +14,7 @@ services:
     depends_on:
       database:
         condition: service_started
-      mongo_database:
+      mongo:
         condition: service_started
     networks:
       - store
@@ -44,19 +44,35 @@ services:
     networks:
       - store
 
-  mongo_database:
-    image: mongo:6.0.3
+  # mongo:
+  #   image: mongo
+  #   container_name: mongo_database
+  #   restart: unless-stopped
+  #   env_file: 
+  #     - ./.env
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: abuchikings
+  #     MONGO_INITDB_ROOT_PASSWORD: password
+  #   ports:
+  #     - 27017:27017
+  #   volumes:
+  #     - store_mongo_db_data:/data/db
+  #   networks:
+  #     - store
+
+  mongo:
+    image: mongo
     container_name: mongo_database
     restart: unless-stopped
-    env_file: .env
+    env_file: 
+      - ./.env
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=$MONGO_DB_ADMIN
-      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_DB_ADMIN_PWD
-      - MONGO_INITDB_DATABASE=$MONGO_DB_NAME
-    ports:
-      - 27017:27017
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_ADMIN}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_ADMIN_PWD}
     volumes:
       - store_mongo_db_data:/data/db
+    networks:
+      - store
 
   redis:
     image: redis

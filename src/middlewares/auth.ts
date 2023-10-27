@@ -1,5 +1,7 @@
+import { FastifyReply, FastifyRequest } from "fastify";
+
 import { AuthFailureError, BadTokenError } from '../utils/ApiError';
-import { ProtectedRequest, UserInterface } from '../utils/interface'
+import { UserInterface } from '../utils/interface'
 import { getJson } from '../cache/query'
 
 const SECRET = process.env.JWT_KEY;
@@ -60,7 +62,7 @@ export const getAccessToken = (authorization?: string) => {
 
 
 
-export const verifyToken = async (req: ProtectedRequest, res: Response) => {
+export const verifyToken = async (req: FastifyRequest, res: FastifyReply) => {
     try {
         req.accessToken = getAccessToken(req.headers.authorization);
 

@@ -8,6 +8,11 @@ const env = cleanEnv(process.env, {
     choices: ['development', 'staging', 'production', 'test']
   }),
   PORT: port({ default: 5001 }),
+  REDIS_URL: str(),
+  TAX_URL: str(),
+  MONGO_DB_ADMIN: str(),
+  MONGO_DB_HOST: str(),
+  MONGO_DB_ADMIN_PWD: str(),
 });
 
 export default env;

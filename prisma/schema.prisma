@@ -11,6 +11,7 @@ model Business {
   id        String   @id @default(cuid())
   name      String
   users     User[]
+  orders    Order[]
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
   createdAt DateTime @default(now()) @db.Timestamptz(3)
 }
@@ -23,17 +24,21 @@ model User {
   password   String
   businessId String
   department String?
+  orders     Order[]
   updatedAt  DateTime @updatedAt @db.Timestamptz(3)
   createdAt  DateTime @default(now()) @db.Timestamptz(3)
   business   Business @relation(fields: [businessId], references: [id])
 }
 
 model Order {
-  id        String   @id @default(cuid())
-  amount    Decimal  @db.Decimal(14, 4)
-  quantity  Int
-  item      String
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  id         String   @id @default(cuid())
+  amount     Decimal  @db.Decimal(14, 4)
+  itemId     String
+  businessId String
+  createdBy  String
+  createdAt  DateTime @default(now()) @db.Timestamptz(3)
+  business   Business @relation(fields: [businessId], references: [id])
+  user       User     @relation(fields: [createdBy], references: [id])
 }
 
 enum Role {

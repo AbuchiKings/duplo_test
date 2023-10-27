@@ -1,5 +1,5 @@
 {
-  "include": ["./src/**/*", "./prisma/**/*"],
+  "include": ["./src/**/*", "./prisma/**/*", "./types.d.ts"],
   "compilerOptions": {
     "target": "es2016", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "module": "commonjs", /* Specify what module code is generated. */
@@ -11,6 +11,6 @@
     "skipLibCheck": true, /* Skip type checking all .d.ts files. */
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "strictPropertyInitialization": false
-  }
+    "strictPropertyInitialization": false,
+  },
 }

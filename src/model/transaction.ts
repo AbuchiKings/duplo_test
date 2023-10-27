@@ -5,7 +5,6 @@ export interface TransactionInterface {
     amount: Number,
     status: String,
     date: Date,
-
 }
 
 const transactionSchema = new Schema<TransactionInterface>({
@@ -25,7 +24,7 @@ const transactionSchema = new Schema<TransactionInterface>({
 
     date: {
         type: Date,
-        expires: '10080m',
+        required:true
     },
 });
 

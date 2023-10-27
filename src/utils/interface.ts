@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 
- type Role = "OWNER" | "HEAD"
+type Role = "OWNER" | "HEAD"
 
 export interface UserInterface {
     id: string;
@@ -14,7 +14,12 @@ export interface UserInterface {
     updatedAt?: Date;
 }
 
-export interface ProtectedRequest extends FastifyRequest {
-    user?: UserInterface;
-    accessToken?: string;
+
+export interface OrderInterface {
+    id: String
+    amount: number
+    itemId: String
+    businessId: String
+    createdBy: String
+    createdAt: Date
 }

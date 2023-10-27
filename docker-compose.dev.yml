@@ -5,7 +5,13 @@ services:
       context: .
       args:
         NODE_ENV: development
-    command: npm run dev
+    command:
+      - /bin/sh
+      - -c
+      - |
+          echo "sleep for 5sec"
+          sleep 5
+          npm run dev
 
   nginx:
     volumes:

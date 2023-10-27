@@ -4,13 +4,12 @@
 #### **POSTMAN DOCS** - [https://documenter.getpostman.com/view/6026635/2s9YRFWAtz](https://documenter.getpostman.com/view/6026635/2s9YRFWAtz) 
 
 ### API Endpoints
-----------------------------------------------------------------
-* POST Create Business                              | (/business)
-* POST Create Department Head                       | (/user)
-* POST Login with Department Lead Account           | (/user/login)
-* POST Create Order                                 | (/order)
-* GET Get Business Order Details                    | (/order/details)
-* GET Get Business Credit Score                     | (/order/score)
+* POST Create Business                              (/business)
+* POST Create Department Head                       (/user)
+* POST Login with Department Lead Account           (/user/login)
+* POST Create Order                                 (/order)
+* GET Get Business Order Details                    (/order/details)
+* GET Get Business Credit Score                     (/order/score)
 
 NB: `itemId` field on place order endpoint can be any random alphanumeric character between 5 and 36 characters in length
 
